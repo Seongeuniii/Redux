@@ -1,6 +1,7 @@
 // 컨테이너 컴포넌트: 리덕스 스토어와 연동된 컴포넌트
 import React from 'react';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import Counter from '../components/Counter';
 import { increase, decrease } from '../modules/counter';
 
@@ -14,14 +15,26 @@ const mapStateToProps = (state) => ({
     number: state.counter.number,
 });
 
-const mapDispatchToProps = (dispatch) => ({
-    increase: () => {
-        dispatch(increase());
-    },
-    decrease: () => {
-        dispatch(decrease());
-    },
-});
+// const mapDispatchToProps = (dispatch) => ({
+//     increase: () => {
+//         dispatch(increase());
+//     },
+//     decrease: () => {
+//         dispatch(decrease());
+//     },
+// });
+
+// const mapDispatchToProps = (dispatch) =>
+//     bindActionCreators(
+//         {
+//             increase,
+//             decrease,
+//         },
+//         dispatch
+//     );
+
+// connect 함수가 내부적으로 bindActionCreators 작업을 대신해 준다.
+const mapDispatchToProps = { increase, decrease };
 
 export default connect(mapStateToProps, mapDispatchToProps)(CounterContainer);
 
